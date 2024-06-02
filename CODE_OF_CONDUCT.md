@@ -1,3 +1,8 @@
+<!--
+SPDX-FileCopyrightText: Matthieu Gallien <matthieu_gallien@yahoo.fr>
+SPDX-License-Identifier: CC0-1.0
+-->
+
 In the Nextcloud community, participants from all over the world come together to create Free Software for a free internet. This is made possible by the support, hard work and enthusiasm of thousands of people, including those who create and use Nextcloud software.
 
 Our code of conduct offers some guidance to ensure Nextcloud participants can cooperate effectively in a positive and inspiring atmosphere, and to explain how together we can strengthen and support each other.

@@ -3,7 +3,7 @@ Upstream-Name: Elisa
 Upstream-Contact: Matthieu Gallien <matthieu_gallien@yahoo.fr>
 Source: https://github.com/nextcloud/profiler
 
-Files: package-lock.json package.json composer.json composer.lock
+Files: package-lock.json package.json composer.json composer.lock openapi.json
 Copyright: Matthieu Gallien <matthieu_gallien@yahoo.fr>
 License: AGPL-3.0-or-later
 

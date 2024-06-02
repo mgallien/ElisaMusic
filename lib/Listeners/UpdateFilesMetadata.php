@@ -2,6 +2,9 @@
 /** lib/Listeners/UpdateFilesMetadata.php */
 declare(strict_types=1);
 
+// SPDX-FileCopyrightText: Matthieu Gallien <matthieu_gallien@yahoo.fr>
+// SPDX-License-Identifier: AGPL-3.0-or-later
+
 namespace OCA\Elisa\Listeners;
 
 use OCP\ILogger;
@@ -12,7 +15,7 @@ use OCP\FilesMetadata\Event\MetadataLiveEvent;
 
 class UpdateFilesMetadata implements IEventListener {
 	private ILogger $logger;
-    
+
 	public function __construct(ILogger $logger) {
 		$this->logger = $logger;
 	}
