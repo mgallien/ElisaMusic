@@ -9,35 +9,39 @@ namespace OCA\Elisa\Hooks;
 
 use OCP\ILogger;
 use OCA\Elisa\ElisaDatabaseManager;
+use OCP\BackgroundJob\IJobList;
+use OCA\Elisa\Jobs\ElisaDatabaseUpdateJob;
 
 class ElisaFilesHooks {
 	private ILogger $logger;
-	private ElisaDatabaseManager $dbManager;
+	private IJobList $jobList;
 
-	public function __construct(ILogger $logger) {
+	public function __construct(IJobList $jobList,
+	                            ILogger $logger) {
+		$this->jobList = $jobList;
 		$this->logger = $logger;
-		$this->dbManager = \OC::$server->query(ElisaDatabaseManager::class);
 	}
 
 	public function fileCreate($path): void {
 		$this->logger->info('file create: ' . $path);
-		$this->dbManager->getDatabase()->addMusicFile($path);
+		$this->logger->info('add DB update job: ' . $path);
+		$this->jobList->add(ElisaDatabaseUpdateJob::class, [$path]);
 	}
 
 	public function fileUpdate($path): void {
 		$this->logger->info('file update: ' . $path);
-		$this->dbManager->getDatabase()->updateMusicFile($path);
+		// $this->jobList->add(ElisaDatabaseUpdateJob::class, [$path]);
 	}
 
 	public function fileDelete($path): void {
 		$this->logger->info('file delete: ' . $path);
-		$this->dbManager->getDatabase()->removeMusicFile($path);
+		// $this->jobList->add(ElisaDatabaseUpdateJob::class, [$path]);
 	}
 
 	public function fileMove($oldpath, $newpath): void {
 		$this->logger->info('file move: from ' . $oldpath . ' to ' . $newpath);
-		$this->dbManager->getDatabase()->removeMusicFile($oldpath);
-		$this->dbManager->getDatabase()->addMusicFile($newpath);
+		// $this->jobList->add(ElisaDatabaseUpdateJob::class, [$oldpath]);
+		// $this->jobList->add(ElisaDatabaseUpdateJob::class, [$newpath]);
 	}
 
 	public function fileMovePost($oldpath, $newpath): void {

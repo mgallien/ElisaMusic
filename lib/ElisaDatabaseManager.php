@@ -38,6 +38,7 @@ class ElisaDatabaseManager {
 		$dataDirPath = $this->config->getSystemValue('datadirectory');
 		$instanceId = $this->config->getSystemValue('instanceid');
 		$this->logger->warning($dataDirPath . '/appdata_' . $instanceId . '/elisa' . $this->databaseFolder);
+
 		return new ElisaDatabase($this->logger, $dataDirPath . '/appdata_' . $instanceId . '/elisa' . $this->databaseFolder . '/elisaDatabase.db');
 	}
 }

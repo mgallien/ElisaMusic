@@ -9,6 +9,7 @@ namespace OCA\Elisa;
 
 use SQLite3;
 use OCP\ILogger;
+use OCP\Files\Node;
 
 class ElisaDatabase extends SQLite3
 {
@@ -128,15 +129,22 @@ class ElisaDatabase extends SQLite3
 		$this->exec('CREATE INDEX IF NOT EXISTS `TracksUniqueDataPriority` ON `Tracks` (`Priority`, `Title`, `ArtistName`, `AlbumTitle`, `AlbumArtistName`, `AlbumPath`, `TrackNumber`, `DiscNumber`)');
 	}
 
-	public function addMusicFile($path): void {
+	public function addAudioFiles(array<int, Node> $filesList): void {
 		$this->logger->info('add ' . $path . 'to db file');
+
+		$this->logger->warning('list of music files');
+		foreach ($filesList as $key => $value) {
+			$this->logger->warning('music file ' . $key . ' ' . $value->getPath());
+
+			$this->exec('INSERT INTO TracksData (`FileName`, `FileModifiedTime`, `ImportDate`) VALUES (' . $value->getPath() . ', ' . $value->getMtime() . ', ' . time() . ') ON DUPLICATE KEY UPDATE `FileModifiedTime` = ' . $value->getMtime());
+		}
 	}
 
-	public function removeMusicFile($path): void {
+	public function removeAudioFiles($path): void {
 		$this->logger->info('remove ' . $path . 'from db file');
 	}
 
-	public function updateMusicFile($path): void {
+	public function updateAudioFiles($path): void {
 		$this->logger->info('update ' . $path . 'in db file');
 	}
 }
