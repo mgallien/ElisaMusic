@@ -47,10 +47,10 @@
         }
     },
     "paths": {
-        "/ocs/v2.php/apps/elisa/api": {
+        "/ocs/v2.php/apps/elisa/database": {
             "get": {
                 "operationId": "api-index",
-                "summary": "An example API endpoint",
+                "summary": "API endpoint to access music database",
                 "tags": [
                     "api"
                 ],

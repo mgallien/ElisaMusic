@@ -13,13 +13,10 @@ use OCP\Files\Node;
 
 class ElisaDatabase extends SQLite3
 {
-	private ILogger $logger;
-
-	function __construct(ILogger $logger,
-                         string $dbName)
+	function __construct(private ILogger $logger,
+                         private string $dbName)
 	{
 		parent::__construct($dbName);
-		$this->logger = $logger;
 
 		$this->exec('CREATE TABLE IF NOT EXISTS `Composer`
 		             (`ID` INTEGER PRIMARY KEY NOT NULL,

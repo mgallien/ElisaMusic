@@ -30,6 +30,7 @@ class ElisaFilesHooks {
 		}
 
 		$this->dbManager->getDatabase()->addAudioFiles($allAudioFiles);
+		$this->dbManager->syncDatabase();
 	}
 
 	public function fileUpdate($path): void {
@@ -43,6 +44,7 @@ class ElisaFilesHooks {
 		}
 
 		$this->dbManager->getDatabase()->addAudioFiles($allAudioFiles);
+		$this->dbManager->syncDatabase();
 	}
 
 	public function fileDelete($path): void {
@@ -56,6 +58,7 @@ class ElisaFilesHooks {
 		}
 
 		$this->dbManager->getDatabase()->addAudioFiles($allAudioFiles);
+		$this->dbManager->syncDatabase();
 	}
 
 	public function fileMove($oldpath, $newpath): void {
@@ -69,6 +72,7 @@ class ElisaFilesHooks {
 		}
 
 		$this->dbManager->getDatabase()->addAudioFiles($allAudioFiles);
+		$this->dbManager->syncDatabase();
 	}
 
 	public function fileMovePost($oldpath, $newpath): void {
