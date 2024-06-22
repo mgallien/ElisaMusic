@@ -129,14 +129,21 @@ class ElisaDatabase extends SQLite3
 		$this->exec('CREATE INDEX IF NOT EXISTS `TracksUniqueDataPriority` ON `Tracks` (`Priority`, `Title`, `ArtistName`, `AlbumTitle`, `AlbumArtistName`, `AlbumPath`, `TrackNumber`, `DiscNumber`)');
 	}
 
-	public function addAudioFiles(array<int, Node> $filesList): void {
-		$this->logger->info('add ' . $path . 'to db file');
-
+	public function addAudioFiles($filesList): void {
 		$this->logger->warning('list of music files');
+
+		$stmt = $this->prepare("INSERT INTO `TracksData` (`FileName`, `FileModifiedTime`, `ImportDate`, `PlayCounter`) VALUES (:filePath , :modifiedTime , :insertTime, 0)");
+
 		foreach ($filesList as $key => $value) {
 			$this->logger->warning('music file ' . $key . ' ' . $value->getPath());
 
-			$this->exec('INSERT INTO TracksData (`FileName`, `FileModifiedTime`, `ImportDate`) VALUES (' . $value->getPath() . ', ' . $value->getMtime() . ', ' . time() . ') ON DUPLICATE KEY UPDATE `FileModifiedTime` = ' . $value->getMtime());
+			$stmt->clear();
+
+			$stmt->bindValue(':filePath', $value->getPath(), SQLITE3_TEXT);
+			$stmt->bindValue(':modifiedTime', $value->getMtime(), SQLITE3_INTEGER);
+			$stmt->bindValue(':insertTime', time(), SQLITE3_INTEGER);
+
+			$stmt->execute();
 		}
 	}
 

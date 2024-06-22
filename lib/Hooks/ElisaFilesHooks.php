@@ -7,41 +7,68 @@ declare(strict_types=1);
 
 namespace OCA\Elisa\Hooks;
 
-use OCP\ILogger;
 use OCA\Elisa\ElisaDatabaseManager;
+use OCP\Files\IRootFolder;
 use OCP\BackgroundJob\IJobList;
-use OCA\Elisa\Jobs\ElisaDatabaseUpdateJob;
+use Psr\Log\LoggerInterface;
 
 class ElisaFilesHooks {
-	private ILogger $logger;
-	private IJobList $jobList;
-
-	public function __construct(IJobList $jobList,
-	                            ILogger $logger) {
-		$this->jobList = $jobList;
-		$this->logger = $logger;
+	public function __construct(private IJobList $jobList,
+	                            private IRootFolder $rootFolder,
+	                            private LoggerInterface $logger,
+	                            private ElisaDatabaseManager $dbManager) {
 	}
 
 	public function fileCreate($path): void {
 		$this->logger->info('file create: ' . $path);
-		$this->logger->info('add DB update job: ' . $path);
-		$this->jobList->add(ElisaDatabaseUpdateJob::class, [$path]);
+
+		$allAudioFiles = $this->rootFolder->searchByMime('audio');
+
+		$this->logger->warning('list of music files');
+		foreach ($allAudioFiles as $key => $value) {
+			$this->logger->warning('music file ' . $key . ' ' . $value->getPath());
+		}
+
+		$this->dbManager->getDatabase()->addAudioFiles($allAudioFiles);
 	}
 
 	public function fileUpdate($path): void {
 		$this->logger->info('file update: ' . $path);
-		// $this->jobList->add(ElisaDatabaseUpdateJob::class, [$path]);
+
+		$allAudioFiles = $this->rootFolder->searchByMime('audio');
+
+		$this->logger->warning('list of music files');
+		foreach ($allAudioFiles as $key => $value) {
+			$this->logger->warning('music file ' . $key . ' ' . $value->getPath());
+		}
+
+		$this->dbManager->getDatabase()->addAudioFiles($allAudioFiles);
 	}
 
 	public function fileDelete($path): void {
 		$this->logger->info('file delete: ' . $path);
-		// $this->jobList->add(ElisaDatabaseUpdateJob::class, [$path]);
+
+		$allAudioFiles = $this->rootFolder->searchByMime('audio');
+
+		$this->logger->warning('list of music files');
+		foreach ($allAudioFiles as $key => $value) {
+			$this->logger->warning('music file ' . $key . ' ' . $value->getPath());
+		}
+
+		$this->dbManager->getDatabase()->addAudioFiles($allAudioFiles);
 	}
 
 	public function fileMove($oldpath, $newpath): void {
 		$this->logger->info('file move: from ' . $oldpath . ' to ' . $newpath);
-		// $this->jobList->add(ElisaDatabaseUpdateJob::class, [$oldpath]);
-		// $this->jobList->add(ElisaDatabaseUpdateJob::class, [$newpath]);
+
+		$allAudioFiles = $this->rootFolder->searchByMime('audio');
+
+		$this->logger->warning('list of music files');
+		foreach ($allAudioFiles as $key => $value) {
+			$this->logger->warning('music file ' . $key . ' ' . $value->getPath());
+		}
+
+		$this->dbManager->getDatabase()->addAudioFiles($allAudioFiles);
 	}
 
 	public function fileMovePost($oldpath, $newpath): void {

@@ -7,10 +7,13 @@ namespace OCA\Elisa\Migration;
 
 use Closure;
 use OCP\DB\ISchemaWrapper;
+use OCP\IDBConnection;
 use OCP\Migration\SimpleMigrationStep;
 use OCP\Migration\IOutput;
 
 class Version000000Date20181013124731 extends SimpleMigrationStep {
+	public function __construct(private IDBConnection $db) {
+	}
 
 	/**
 	 * @param IOutput $output
