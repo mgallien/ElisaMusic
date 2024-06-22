@@ -28,5 +28,16 @@
 		"psalm:fix": "psalm.phar --alter --issues=InvalidReturnType,InvalidNullableReturnType,MissingParamType,InvalidFalsableReturnType"
 	},
 	"config": {
+                "optimize-autoloader": true,
+                "classmap-authoritative": true,
+                "platform": {
+                        "php": "8.0.2"
+                },
+                "sort-packages": true
+	},
+	"autoload" : {
+		"psr-4": {
+			"OCA\\Elisa\\": "./lib/"
+		}
 	}
 }
